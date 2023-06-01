@@ -44,4 +44,9 @@ class ProductController {
     products.clear();
     products.addAll(fetchedProducts);
   }
+
+  void toggle(Product productDone) {
+    productDone.done = !productDone.done;
+    updateProduct(productDone);
+  }
 }

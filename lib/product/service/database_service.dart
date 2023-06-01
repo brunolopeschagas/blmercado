@@ -30,7 +30,8 @@ class DatabaseService {
       CREATE TABLE products(
         id INTEGER PRIMARY KEY,
         name TEXT,
-        price REAL
+        price REAL,
+        done INTEGER
       )
     ''');
   }

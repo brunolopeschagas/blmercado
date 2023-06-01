@@ -34,7 +34,7 @@ class ProductHomePageState extends State<ProductHomePage> {
                     child: TextField(
                       controller: productController.nameController,
                       decoration: const InputDecoration(
-                        labelText: 'Product Name',
+                        labelText: 'Produto',
                       ),
                     ),
                   ),
@@ -44,7 +44,7 @@ class ProductHomePageState extends State<ProductHomePage> {
                       controller: productController.priceController,
                       keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
-                        labelText: 'Price',
+                        labelText: 'Preço',
                       ),
                     ),
                   ),
@@ -73,9 +73,30 @@ class ProductHomePageState extends State<ProductHomePage> {
                         final Product product =
                             productController.products[index];
                         return ListTile(
-                          title: Text(product.name),
+                          leading: Checkbox(
+                            value: product.done,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                productController.toggle(product);
+                              });
+                            },
+                          ),
+                          title: Text(
+                            product.name,
+                            style: TextStyle(
+                              decoration: product.done
+                                  ? TextDecoration.lineThrough
+                                  : null,
+                            ),
+                          ),
                           subtitle: Text(
-                              'Price: R\$${product.price.toStringAsFixed(2)}'),
+                            'Price: R\$${product.price.toStringAsFixed(2)}',
+                            style: TextStyle(
+                              decoration: product.done
+                                  ? TextDecoration.lineThrough
+                                  : null,
+                            ),
+                          ),
                           trailing: IconButton(
                             icon: const Icon(Icons.delete),
                             onPressed: () =>

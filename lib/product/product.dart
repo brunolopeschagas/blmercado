@@ -1,15 +1,18 @@
 class Product {
   int? id;
   String name;
+  bool done;
   double price;
 
-  Product({this.id, required this.name, required this.price});
+  Product(
+      {this.id, required this.name, required this.price, this.done = false});
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'name': name,
       'price': price,
+      'done': done,
     };
   }
 
@@ -18,6 +21,7 @@ class Product {
       id: map['id'],
       name: map['name'],
       price: map['price'],
+      done: map['done'] == 1 ? true : false,
     );
   }
 
@@ -25,6 +29,7 @@ class Product {
     return {
       'name': name,
       'price': price,
+      'done': done,
     };
   }
 }
