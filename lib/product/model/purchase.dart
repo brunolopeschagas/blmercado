@@ -6,16 +6,23 @@ class Purchase {
   Purchase();
   Purchase.complete({required this.products});
 
-  void addProduct(Product product) {
-    products.add(product);
+  void addProduct(Product productToAdd) {
+    products.add(productToAdd);
   }
 
-  void addAllProducts(List<Product> products) {
-    products.addAll(products);
+  void clear() {
+    products.clear();
+  }
+
+  void addAllProducts(List<Product> productsToAdd) {
+    products.addAll(productsToAdd);
+  }
+
+  void removeProduct(Product productToRemove) {
+    products.remove(productToRemove);
   }
 
   double calculateTotal() {
-    double sum = products.fold(0, (sum, next) => sum + next.price);
-    return sum;
+    double sum = products.forEach((element) {sum += element.price})
   }
 }

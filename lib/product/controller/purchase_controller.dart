@@ -1,10 +1,11 @@
+import 'package:blmercado/product/model/purchase.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../model/product.dart';
 import '../service/database_service.dart';
 
-class ProductController {
-  final List<Product> products = [];
+class PurchaseController {
+  final Purchase purchase = Purchase();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
 
@@ -14,18 +15,19 @@ class ProductController {
     final Product newProduct = Product(id: 0, name: name, price: price);
     final int id = await DatabaseService.instance.insertProduct(newProduct);
     newProduct.id = id;
-    products.add(newProduct);
+    purchase.addProduct(newProduct);
     nameController.clear();
     priceController.clear();
+    print('list size = ${purchase.products.length}');
   }
 
   Future<void> updateProduct(Product product) async {
     final int rowsAffected =
         await DatabaseService.instance.updateProduct(product);
     if (rowsAffected > 0) {
-      final int index = products.indexWhere((p) => p.id == product.id);
+      final int index = purchase.products.indexWhere((p) => p.id == product.id);
       if (index != -1) {
-        products[index] = product;
+        purchase.products[index] = product;
       }
     }
   }
@@ -34,19 +36,26 @@ class ProductController {
     final int rowsAffected =
         await DatabaseService.instance.deleteProduct(product.id);
     if (rowsAffected > 0) {
-      products.remove(product);
+      purchase.removeProduct(product);
     }
   }
 
   Future<void> fetchProducts() async {
     final List<Product> fetchedProducts =
         await DatabaseService.instance.getAllProducts();
-    products.clear();
-    products.addAll(fetchedProducts);
+    purchase.clear();
+    purchase.addAllProducts(fetchedProducts);
   }
 
   void toggle(Product productDone) {
     productDone.done = !productDone.done;
     updateProduct(productDone);
   }
+
+  double calculateTotal() {
+    print('list size calculate = ${purchase.products.length}');
+    return purchase.calculateTotal();
+  }
+
+  int get totalProducts => purchase.products.length;
 }
