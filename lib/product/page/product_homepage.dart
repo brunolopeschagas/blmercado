@@ -1,3 +1,4 @@
+import 'package:blmercado/common/formatter/currency_br_real.dart';
 import 'package:flutter/material.dart';
 
 import '../controller/product_controller.dart';
@@ -12,6 +13,7 @@ class ProductHomePage extends StatefulWidget {
 
 class ProductHomePageState extends State<ProductHomePage> {
   final ProductController productController = ProductController();
+  final CurrencyBRReal currencyBRReal = CurrencyBRReal();
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +92,7 @@ class ProductHomePageState extends State<ProductHomePage> {
                             ),
                           ),
                           subtitle: Text(
-                            'Price: R\$${product.price.toStringAsFixed(2)}',
+                            currencyBRReal.format(product.price),
                             style: TextStyle(
                               decoration: product.done
                                   ? TextDecoration.lineThrough
@@ -99,8 +101,9 @@ class ProductHomePageState extends State<ProductHomePage> {
                           ),
                           trailing: IconButton(
                             icon: const Icon(Icons.delete),
-                            onPressed: () =>
-                                productController.deleteProduct(product),
+                            onPressed: () => setState(() {
+                              productController.deleteProduct(product);
+                            }),
                           ),
                         );
                       },
