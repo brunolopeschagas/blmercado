@@ -2,7 +2,7 @@ import 'package:blmercado/common/formatter/currency_br_real.dart';
 import 'package:flutter/material.dart';
 
 import '../controller/product_controller.dart';
-import '../product.dart';
+import '../model/product.dart';
 
 class ProductHomePage extends StatefulWidget {
   const ProductHomePage({super.key, required String title});
@@ -111,6 +111,12 @@ class ProductHomePageState extends State<ProductHomePage> {
                   }
                 },
               ),
+            ),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Total: ${40 + 22}'),
+              ],
             ),
           ],
         ),

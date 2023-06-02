@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-import '../product.dart';
+import '../model/product.dart';
 
 class DatabaseService {
   static final DatabaseService instance = DatabaseService._();

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../product.dart';
+import '../model/product.dart';
 import '../service/database_service.dart';
 
 class ProductController {
