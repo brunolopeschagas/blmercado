@@ -23,6 +23,12 @@ class Purchase {
   }
 
   double calculateTotal() {
-    double sum = products.forEach((element) {sum += element.price})
+    double sum = 0;
+
+    for (Product element in products) {
+      sum += element.price;
+    }
+
+    return sum;
   }
 }

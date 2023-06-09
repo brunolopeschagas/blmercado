@@ -12,7 +12,7 @@ class Product {
       'id': id,
       'name': name,
       'price': price,
-      'done': done,
+      'done': done == false ? 0 : 1,
     };
   }
 
@@ -29,7 +29,7 @@ class Product {
     return {
       'name': name,
       'price': price,
-      'done': done,
+      'done': done == false ? 0 : 1,
     };
   }
 }
