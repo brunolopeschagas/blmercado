@@ -24,11 +24,9 @@ class Purchase {
 
   double calculateTotal() {
     double sum = 0;
-
     for (Product element in products) {
       sum += element.price;
     }
-
     return sum;
   }
 }
