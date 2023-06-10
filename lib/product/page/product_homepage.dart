@@ -12,9 +12,10 @@ class PurchaseHomePage extends StatefulWidget {
 }
 
 class PurchaseHomePageState extends State<PurchaseHomePage> {
-  final PurchaseController productController = PurchaseController();
+  final PurchaseController purchaseController = PurchaseController();
   final CurrencyBRReal currencyBRReal = CurrencyBRReal();
-  String _totalProductsValue = '';
+  double _totalProductsValue = 0;
+  String _totalProductsValueText = '';
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,7 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
                 children: [
                   Expanded(
                     child: TextField(
-                      controller: productController.nameController,
+                      controller: purchaseController.nameController,
                       decoration: const InputDecoration(
                         labelText: 'Produto',
                       ),
@@ -44,7 +45,7 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
                   const SizedBox(width: 8.0),
                   Expanded(
                     child: TextField(
-                      controller: productController.priceController,
+                      controller: purchaseController.priceController,
                       keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
                         labelText: 'Preço',
@@ -54,9 +55,7 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
                   const SizedBox(width: 8.0),
                   ElevatedButton(
                     onPressed: () {
-                      setState(() {
-                        addProduct();
-                      });
+                      addProduct();
                     },
                     child: const Text('Add'),
                   ),
@@ -65,22 +64,22 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
             ),
             Expanded(
               child: FutureBuilder<void>(
-                future: productController.fetchProducts(),
+                future: purchaseController.fetchProducts(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
                   } else {
                     return ListView.builder(
-                      itemCount: productController.totalProducts,
+                      itemCount: purchaseController.totalProducts,
                       itemBuilder: (context, index) {
                         final Product product =
-                            productController.purchase.products[index];
+                            purchaseController.purchase.products[index];
                         return ListTile(
                           leading: Checkbox(
                             value: product.done,
                             onChanged: (bool? value) {
                               setState(() {
-                                productController.toggle(product);
+                                purchaseController.toggle(product);
                               });
                             },
                           ),
@@ -101,11 +100,10 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
                             ),
                           ),
                           trailing: IconButton(
-                            icon: const Icon(Icons.delete),
-                            onPressed: () => setState(() {
-                              removeProduct(product);
-                            }),
-                          ),
+                              icon: const Icon(Icons.delete),
+                              onPressed: () {
+                                removeProduct(product);
+                              }),
                         );
                       },
                     );
@@ -137,21 +135,21 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
   }
 
   void removeProduct(Product product) {
-    setState(() {
-      productController.deleteProduct(product);
+    purchaseController.deleteProduct(product).whenComplete(() {
       _calculateTotal();
     });
   }
 
   void addProduct() {
-    setState(() {
-      productController.addProduct();
+    purchaseController.saveProduct().whenComplete(() {
       _calculateTotal();
     });
   }
 
   void _calculateTotal() {
-    _totalProductsValue =
-        currencyBRReal.format(productController.calculateTotal());
+    _totalProductsValue = purchaseController.calculateTotal();
+    setState(() {
+      _totalProductsValueText = currencyBRReal.format(_totalProductsValue);
+    });
   }
 }

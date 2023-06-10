@@ -9,7 +9,7 @@ class PurchaseController {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
 
-  Future<void> addProduct() async {
+  Future<void> saveProduct() async {
     final String name = nameController.text;
     final double price = double.parse(priceController.text);
     final Product newProduct = Product(id: 0, name: name, price: price);
