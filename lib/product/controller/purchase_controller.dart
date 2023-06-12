@@ -3,14 +3,14 @@ import 'package:blmercado/product/service/product_service_db.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../model/product.dart';
-import '../service/database_service.dart';
+import '../service/database_sqlite_service.dart';
 
 class PurchaseController {
   final Purchase purchase = Purchase();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final ProductServiceDb productServiceDb =
-      ProductServiceDb(dataBaseService: DatabaseService.instance);
+      ProductServiceDb(dataBaseService: DatabaseSQLiteService.instance);
 
   Future<void> saveProduct() async {
     final String name = nameController.text;

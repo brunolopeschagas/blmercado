@@ -2,11 +2,11 @@ import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-class DatabaseService {
-  static final DatabaseService instance = DatabaseService._();
+class DatabaseSQLiteService {
+  static final DatabaseSQLiteService instance = DatabaseSQLiteService._();
   static Database? _database;
 
-  DatabaseService._();
+  DatabaseSQLiteService._();
 
   Future<Database?> get database async {
     if (_database != null) return _database;

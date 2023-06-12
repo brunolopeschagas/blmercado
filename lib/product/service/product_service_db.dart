@@ -1,10 +1,10 @@
 import 'package:sqflite/sqflite.dart';
 
 import '../model/product.dart';
-import 'database_service.dart';
+import 'database_sqlite_service.dart';
 
 class ProductServiceDb {
-  DatabaseService dataBaseService;
+  DatabaseSQLiteService dataBaseService;
 
   ProductServiceDb({required this.dataBaseService});
 

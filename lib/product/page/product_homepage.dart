@@ -14,8 +14,8 @@ class PurchaseHomePage extends StatefulWidget {
 class PurchaseHomePageState extends State<PurchaseHomePage> {
   final PurchaseController purchaseController = PurchaseController();
   final CurrencyBRReal currencyBRReal = CurrencyBRReal();
-  double _totalProductsValue = 0;
   String _totalProductsValueText = '';
+  int _totalItens = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +52,14 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 8.0),
+                  const SizedBox(
+                    width: 8.0,
+                  ),
                   ElevatedButton(
                     onPressed: () {
-                      addProduct();
+                      _addProduct();
                     },
-                    child: const Text('Add'),
+                    child: const Icon(Icons.add),
                   ),
                 ],
               ),
@@ -102,7 +104,7 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
                           trailing: IconButton(
                               icon: const Icon(Icons.delete),
                               onPressed: () {
-                                removeProduct(product);
+                                _removeProduct(product);
                               }),
                         );
                       },
@@ -116,7 +118,8 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text('Total: $_totalProductsValue'),
+                  Text('Total: $_totalProductsValueText'),
+                  Text('$_totalItens Itens'),
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
@@ -134,22 +137,23 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
     );
   }
 
-  void removeProduct(Product product) {
+  void _removeProduct(Product product) {
     purchaseController.deleteProduct(product).whenComplete(() {
       _calculateTotal();
     });
   }
 
-  void addProduct() {
+  void _addProduct() {
     purchaseController.saveProduct().whenComplete(() {
       _calculateTotal();
     });
   }
 
   void _calculateTotal() {
-    _totalProductsValue = purchaseController.calculateTotal();
+    double totalProductsValue = purchaseController.calculateTotal();
     setState(() {
-      _totalProductsValueText = currencyBRReal.format(_totalProductsValue);
+      _totalProductsValueText = currencyBRReal.format(totalProductsValue);
+      _totalItens = purchaseController.totalProducts;
     });
   }
 }
