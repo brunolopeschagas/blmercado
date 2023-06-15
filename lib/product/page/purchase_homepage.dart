@@ -16,6 +16,7 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
   final CurrencyBRReal currencyBRReal = CurrencyBRReal();
   String _totalProductsValueText = '';
   int _totalItens = 0;
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -123,6 +124,52 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
           },
           child: const Icon(Icons.add),
         ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.history),
+              label: 'Minhas compras',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.monetization_on),
+              label: 'Nova Compra',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.amber[800],
+          onTap: (int index) {
+            switch (index) {
+              case 0:
+                // only scroll to top when current index is selected.
+                if (_selectedIndex == index) {}
+              case 1:
+                showModal(context);
+            }
+            setState(
+              () {
+                _selectedIndex = index;
+              },
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  void showModal(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        content: const Text(
+            'Nome para nova compra: (deixe vazio se estiver com preguiça)'),
+        actions: <TextButton>[
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('Fechar'),
+          )
+        ],
       ),
     );
   }
