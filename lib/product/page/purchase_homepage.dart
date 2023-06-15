@@ -52,15 +52,6 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    width: 8.0,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      _addProduct();
-                    },
-                    child: const Icon(Icons.add),
-                  ),
                 ],
               ),
             ),
@@ -116,22 +107,21 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Total: $_totalProductsValueText'),
+                  const SizedBox(width: 20),
                   Text('$_totalItens Itens'),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _calculateTotal();
-                      });
-                    },
-                    child: const Icon(Icons.refresh),
-                  ),
                 ],
               ),
             ),
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            _addProduct();
+          },
+          child: const Icon(Icons.add),
         ),
       ),
     );

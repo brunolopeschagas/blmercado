@@ -1,10 +1,20 @@
 import 'package:blmercado/product/model/product.dart';
 
 class Purchase {
+  String? name;
   List<Product> products = [];
 
-  Purchase();
-  Purchase.complete({required this.products});
+  Purchase() {
+    createNameAuto();
+  }
+
+  Purchase.complete({required this.products}) {
+    createNameAuto();
+  }
+
+  void createNameAuto() {
+    name ??= DateTime.now().toString();
+  }
 
   void addProduct(Product productToAdd) {
     products.add(productToAdd);
