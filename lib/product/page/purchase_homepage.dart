@@ -12,6 +12,7 @@ class PurchaseHomePage extends StatefulWidget {
 }
 
 class PurchaseHomePageState extends State<PurchaseHomePage> {
+  final TextEditingController _textFieldController = TextEditingController();
   final PurchaseController purchaseController = PurchaseController();
   final CurrencyBRReal currencyBRReal = CurrencyBRReal();
   String _totalProductsValueText = '';
@@ -143,7 +144,7 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
                 // only scroll to top when current index is selected.
                 if (_selectedIndex == index) {}
               case 1:
-                showModal(context);
+                _displayTextInputDialog(context);
             }
             setState(
               () {
@@ -156,22 +157,53 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
     );
   }
 
-  void showModal(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        content: const Text(
-            'Nome para nova compra: (deixe vazio se estiver com preguiça)'),
-        actions: <TextButton>[
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('Fechar'),
-          )
-        ],
-      ),
-    );
+  Future<void> _displayTextInputDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Nome para a compra:'),
+            content: TextField(
+              autofocus: true,
+              onSubmitted: (value) {
+                purchaseController.purchase.name = value;
+              },
+              controller: _textFieldController,
+              decoration: const InputDecoration(
+                  hintText: "Ex: Compra de agosto no Mercadinho"),
+            ),
+            actions: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  MaterialButton(
+                    color: Colors.red,
+                    textColor: Colors.white,
+                    child: const Text('Desisti'),
+                    onPressed: () {
+                      setState(() {
+                        _textFieldController.clear();
+                        purchaseController.purchase.name = "";
+                        Navigator.pop(context);
+                      });
+                    },
+                  ),
+                  MaterialButton(
+                    color: Colors.blue,
+                    textColor: Colors.white,
+                    child: const Text('OK'),
+                    onPressed: () {
+                      setState(() {
+                        _textFieldController.clear();
+                        Navigator.pop(context);
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ],
+          );
+        });
   }
 
   void _removeProduct(Product product) {
