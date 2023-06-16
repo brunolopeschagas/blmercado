@@ -28,9 +28,21 @@ class DatabaseSQLiteService {
       CREATE TABLE products(
         id INTEGER PRIMARY KEY,
         name TEXT,
-        price REAL,
         done INTEGER
-      )
+      );
+      CREATE TABLE purchases(
+        id INTEGER PRIMARY KEY,
+        name TEXT,
+        done INTEGER
+      );
+      CREATE TABLE products_purchased(
+        fk_product_id INTEGER,
+        fk_purchase_id INTEGER,
+        price_product REAL,
+        quantitie_product REAL
+      );
     ''');
   }
+
+  Future close() async => _database!.close();
 }

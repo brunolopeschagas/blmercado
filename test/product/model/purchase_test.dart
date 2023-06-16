@@ -3,6 +3,12 @@ import 'package:blmercado/product/model/purchase.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  test('shold create a named purchase', () {
+    Purchase purchase = Purchase(name: 'Compra do barzinho da esquina');
+    String expectedName = 'Compra do barzinho da esquina';
+    expect(purchase.name, expectedName);
+  });
+
   test('calculate the total value of a purchase', () {
     Purchase purchase = Purchase.complete(products: simulateProducts());
     double totalExpected = 461.38;

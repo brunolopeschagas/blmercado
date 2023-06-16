@@ -1,19 +1,25 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import 'package:blmercado/product/model/product.dart';
 
 class Purchase {
+  int? id;
   String? name;
   List<Product> products = [];
+  bool? done = false;
 
-  Purchase() {
-    createNameAuto();
+  Purchase({this.id, this.name, this.done}) {
+    createBasicPurchase();
   }
 
-  Purchase.complete({required this.products}) {
-    createNameAuto();
+  Purchase.complete({this.id, this.name, this.done, required this.products}) {
+    createBasicPurchase();
   }
 
-  void createNameAuto() {
+  void createBasicPurchase() {
     name ??= DateTime.now().toString();
+    done ??= false;
   }
 
   void addProduct(Product productToAdd) {
@@ -38,5 +44,21 @@ class Purchase {
       sum += element.price;
     }
     return sum;
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'name': name,
+      'done': done == false ? 0 : 1,
+    };
+  }
+
+  factory Purchase.fromMap(Map<String, dynamic> map) {
+    return Purchase(
+      id: map['id'],
+      name: map['name'],
+      done: map['done'] == 1 ? true : false,
+    );
   }
 }
