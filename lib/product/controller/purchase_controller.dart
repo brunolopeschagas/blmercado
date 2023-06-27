@@ -1,16 +1,26 @@
 import 'package:blmercado/product/model/purchase.dart';
 import 'package:blmercado/product/service/product_service_db.dart';
+import 'package:blmercado/product/service/purchase_service_db.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../model/product.dart';
 import '../service/database_sqlite_service.dart';
 
 class PurchaseController {
-  final Purchase purchase = Purchase();
+  Purchase purchase = Purchase();
+  final TextEditingController purchaseNameController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
+  final PurchaseServiceDb purchaseServiceDb =
+      PurchaseServiceDb(dataBaseService: DatabaseSQLiteService.instance);
   final ProductServiceDb productServiceDb =
       ProductServiceDb(dataBaseService: DatabaseSQLiteService.instance);
+
+  Future<void> savePurchase() async {
+    purchase = Purchase(name: purchaseNameController.text);
+    await purchaseServiceDb.insertPurchase(purchase);
+    purchaseNameController.clear();
+  }
 
   Future<void> saveProduct() async {
     final String name = nameController.text;

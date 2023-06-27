@@ -12,7 +12,6 @@ class PurchaseHomePage extends StatefulWidget {
 }
 
 class PurchaseHomePageState extends State<PurchaseHomePage> {
-  final TextEditingController _textFieldController = TextEditingController();
   final PurchaseController purchaseController = PurchaseController();
   final CurrencyBRReal currencyBRReal = CurrencyBRReal();
   String _totalProductsValueText = '';
@@ -144,7 +143,7 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
                 // only scroll to top when current index is selected.
                 if (_selectedIndex == index) {}
               case 1:
-                _displayTextInputDialog(context);
+                _displayPurchaseDialog(context);
             }
             setState(
               () {
@@ -157,7 +156,7 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
     );
   }
 
-  Future<void> _displayTextInputDialog(BuildContext context) async {
+  Future<void> _displayPurchaseDialog(BuildContext context) async {
     return showDialog(
         context: context,
         builder: (context) {
@@ -165,10 +164,7 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
             title: const Text('Nome para a compra:'),
             content: TextField(
               autofocus: true,
-              onSubmitted: (value) {
-                purchaseController.purchase.name = value;
-              },
-              controller: _textFieldController,
+              controller: purchaseController.purchaseNameController,
               decoration: const InputDecoration(
                   hintText: "Ex: Compra de agosto no Mercadinho"),
             ),
@@ -182,8 +178,7 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
                     child: const Text('Desisti'),
                     onPressed: () {
                       setState(() {
-                        _textFieldController.clear();
-                        purchaseController.purchase.name = "";
+                        purchaseController.purchaseNameController.clear();
                         Navigator.pop(context);
                       });
                     },
@@ -191,19 +186,21 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
                   MaterialButton(
                     color: Colors.blue,
                     textColor: Colors.white,
+                    onPressed: _savePurchase,
                     child: const Text('OK'),
-                    onPressed: () {
-                      setState(() {
-                        _textFieldController.clear();
-                        Navigator.pop(context);
-                      });
-                    },
                   ),
                 ],
               ),
             ],
           );
         });
+  }
+
+  void _savePurchase() {
+    purchaseController.savePurchase().whenComplete(() {
+      Navigator.pop(context);
+    });
+    print('purchase ${purchaseController.purchase.name} concluida');
   }
 
   void _removeProduct(Product product) {

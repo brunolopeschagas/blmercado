@@ -1,0 +1,14 @@
+#Criando compras e salvando produtos
+
+-Criar nova compra [v]
+(salvar na tabela purchase)
+
+-Limpar pagina da compra exibindo a nova compra []
+ (atualamente estão aparecendo os produtos todos)
+
+-Permitir adição de produtos a compra []
+(salvar na tabela products_purchased)
+
+-Tentar remover os metodos de produto do purchase_controller []
+ (e criar seu próprio controller)
+
