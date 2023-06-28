@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
 
 import 'package:blmercado/product/model/product.dart';
 
@@ -41,7 +40,7 @@ class Purchase {
   double calculateTotal() {
     double sum = 0;
     for (Product element in products) {
-      sum += element.price;
+      sum += element.price!;
     }
     return sum;
   }

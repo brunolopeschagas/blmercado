@@ -1,10 +1,10 @@
-import 'package:blmercado/product/model/purchase.dart';
+import 'package:blmercado/purchase/model/purchase.dart';
 import 'package:blmercado/product/service/product_service_db.dart';
-import 'package:blmercado/product/service/purchase_service_db.dart';
+import 'package:blmercado/purchase/service/purchase_service_db.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../model/product.dart';
-import '../service/database_sqlite_service.dart';
+import '../../product/model/product.dart';
+import '../../common/database/database_sqlite_service.dart';
 
 class PurchaseController {
   Purchase purchase = Purchase();

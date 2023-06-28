@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:blmercado/product/page/purchase_homepage.dart';
+import 'package:blmercado/purchase/page/purchase_homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 

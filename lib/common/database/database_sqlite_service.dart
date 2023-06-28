@@ -38,8 +38,8 @@ class DatabaseSQLiteService {
       CREATE TABLE products_purchased(
         fk_product_id INTEGER,
         fk_purchase_id INTEGER,
-        price_product REAL,
-        quantitie_product REAL
+        price_unit REAL,
+        quantitie REAL
       );
     ''');
   }

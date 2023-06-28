@@ -2,7 +2,7 @@ import 'package:blmercado/common/formatter/currency_br_real.dart';
 import 'package:flutter/material.dart';
 
 import '../controller/purchase_controller.dart';
-import '../model/product.dart';
+import '../../product/model/product.dart';
 
 class PurchaseHomePage extends StatefulWidget {
   const PurchaseHomePage({super.key, required String title});
@@ -86,7 +86,8 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
                             ),
                           ),
                           subtitle: Text(
-                            currencyBRReal.format(product.price),
+                            'sdf',
+                            // currencyBRReal.format(product.price!),
                             style: TextStyle(
                               decoration: product.done
                                   ? TextDecoration.lineThrough
@@ -200,7 +201,6 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
     purchaseController.savePurchase().whenComplete(() {
       Navigator.pop(context);
     });
-    print('purchase ${purchaseController.purchase.name} concluida');
   }
 
   void _removeProduct(Product product) {

@@ -1,5 +1,5 @@
 import 'package:blmercado/product/model/product.dart';
-import 'package:blmercado/product/model/purchase.dart';
+import 'package:blmercado/purchase/model/purchase.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

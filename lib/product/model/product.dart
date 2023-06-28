@@ -2,10 +2,9 @@ class Product {
   int? id;
   String name;
   bool done;
-  double price;
+  double? price;
 
-  Product(
-      {this.id, required this.name, required this.price, this.done = false});
+  Product({this.id, required this.name, this.price, this.done = false});
 
   Map<String, dynamic> toMap() {
     return {
@@ -20,7 +19,6 @@ class Product {
     return Product(
       id: map['id'],
       name: map['name'],
-      price: map['price'],
       done: map['done'] == 1 ? true : false,
     );
   }
