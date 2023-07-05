@@ -58,7 +58,7 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
             ),
             Expanded(
               child: FutureBuilder<void>(
-                future: purchaseController.fetchProducts(),
+                future: initProductsAndTotal(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
@@ -86,8 +86,7 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
                             ),
                           ),
                           subtitle: Text(
-                            'sdf',
-                            // currencyBRReal.format(product.price!),
+                            currencyBRReal.format(product.price!),
                             style: TextStyle(
                               decoration: product.done
                                   ? TextDecoration.lineThrough
@@ -155,6 +154,11 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
         ),
       ),
     );
+  }
+
+  Future<void> initProductsAndTotal() async {
+    purchaseController.fetchProducts();
+    _calculateTotal();
   }
 
   Future<void> _displayPurchaseDialog(BuildContext context) async {

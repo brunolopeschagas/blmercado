@@ -22,6 +22,11 @@ class PurchaseController {
     purchaseNameController.clear();
   }
 
+  Future<Purchase> getLastPurchase() async {
+    purchase = await purchaseServiceDb.getLastPurchase();
+    return purchase;
+  }
+
   Future<void> saveProduct() async {
     final String name = nameController.text;
     final double price = double.parse(priceController.text);

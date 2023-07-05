@@ -19,6 +19,7 @@ class Product {
     return Product(
       id: map['id'],
       name: map['name'],
+      price: map['price'],
       done: map['done'] == 1 ? true : false,
     );
   }
