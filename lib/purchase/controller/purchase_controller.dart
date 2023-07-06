@@ -55,11 +55,12 @@ class PurchaseController {
     }
   }
 
-  Future<void> fetchProducts() async {
+  Future<List<Product>> fetchProducts() async {
     final List<Product> fetchedProducts =
         await productServiceDb.getAllProducts();
     purchase.clear();
     purchase.addAllProducts(fetchedProducts);
+    return fetchedProducts;
   }
 
   void toggle(Product productDone) {

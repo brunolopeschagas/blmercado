@@ -17,6 +17,14 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
   String _totalProductsValueText = '';
   int _totalItens = 0;
   int _selectedIndex = 0;
+  late Future<List<Product>> products;
+
+  @override
+  void initState() {
+    super.initState();
+    products = purchaseController.fetchProducts();
+    _calculateTotal();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +66,7 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
             ),
             Expanded(
               child: FutureBuilder<void>(
-                future: initProductsAndTotal(),
+                future: products,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
@@ -154,11 +162,6 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
         ),
       ),
     );
-  }
-
-  Future<void> initProductsAndTotal() async {
-    purchaseController.fetchProducts();
-    _calculateTotal();
   }
 
   Future<void> _displayPurchaseDialog(BuildContext context) async {
