@@ -1,4 +1,5 @@
 import 'package:blmercado/common/formatter/currency_br_real.dart';
+import 'package:blmercado/purchase/model/purchase.dart';
 import 'package:flutter/material.dart';
 
 import '../controller/purchase_controller.dart';
@@ -17,13 +18,14 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
   String _totalProductsValueText = '';
   int _totalItens = 0;
   int _selectedIndex = 0;
-  late Future<List<Product>> products;
+  late Future<List<Product>> productsPurchased;
+  late Future<Purchase> lastPurchase;
 
   @override
   void initState() {
     super.initState();
-    products = purchaseController.fetchProducts();
-    _calculateTotal();
+    productsPurchased = purchaseController.fetchProducts();
+    lastPurchase = purchaseController.getLastPurchase();
   }
 
   @override
@@ -39,6 +41,22 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
         ),
         body: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FutureBuilder<Purchase>(
+                      future: lastPurchase,
+                      builder: (ctx, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return Text('${snapshot.data!.name}');
+                        }
+                        return const Text('No data available yet...');
+                      })
+                ],
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -66,7 +84,7 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
             ),
             Expanded(
               child: FutureBuilder<void>(
-                future: products,
+                future: productsPurchased,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());

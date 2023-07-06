@@ -18,12 +18,14 @@ class PurchaseServiceDb {
 
   Future<Purchase> getLastPurchase() async {
     Database? db = await dataBaseService.database;
-    List<Map<String, dynamic>> maps = await db!.query(_TBL_PURCHASES,
+    List<Map<String, dynamic>> lastPurchase = await db!.query(_TBL_PURCHASES,
         columns: [_COLUMN_ID, _COLUMN_NAME, _COLUMN_NAME, _COLUMN_DONE],
         orderBy: '$_COLUMN_ID DESC',
         limit: 1);
-
-    return Purchase.fromMap(maps.first);
+    if (lastPurchase.isNotEmpty) {
+      return Purchase.fromMap(lastPurchase.first);
+    }
+    return Purchase(name: '');
   }
 
   Future<List<Purchase>> getAllPurchases() async {
