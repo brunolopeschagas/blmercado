@@ -225,6 +225,9 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
   void _savePurchase() {
     purchaseController.savePurchase().whenComplete(() {
       Navigator.pop(context);
+      setState(() {
+        lastPurchase = purchaseController.getLastPurchase();
+      });
     });
   }
 

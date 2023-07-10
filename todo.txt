@@ -3,13 +3,15 @@
 -Criar nova compra [v]
 (salvar na tabela purchase)
 
+-Exibir o nome da nova compra abaixo da appbar[v]
+
+-Listar os produtos da compra corrente[]
+
 -Permitir adição de produtos a compra []
 (salvar na tabela products_purchased)
 
 -Limpar página da compra exibindo a nova compra []
  (atualamente estão aparecendo os produtos todos)
-
--Exibir o nome da nova compra abaixo da appbar[]
 
 -Tentar remover os metodos de produto do purchase_controller []
  (e criar seu próprio controller)
