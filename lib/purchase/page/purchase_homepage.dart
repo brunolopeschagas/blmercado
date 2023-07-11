@@ -24,8 +24,8 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
   @override
   void initState() {
     super.initState();
-    productsPurchased = purchaseController.fetchProducts();
     lastPurchase = purchaseController.getLastPurchase();
+    productsPurchased = purchaseController.fetchProducts();
   }
 
   @override
@@ -238,7 +238,9 @@ class PurchaseHomePageState extends State<PurchaseHomePage> {
   }
 
   void _addProduct() {
-    purchaseController.saveProduct().whenComplete(() {
+    purchaseController.saveProduct().whenComplete(() async {
+      purchaseController.addProdutPurchased(
+          purchaseController.purchase.products.last, await lastPurchase);
       _calculateTotal();
     });
   }

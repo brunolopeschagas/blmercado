@@ -1,5 +1,9 @@
+import 'dart:math';
+
+import 'package:blmercado/purchase/model/product_purchase.dart';
 import 'package:blmercado/purchase/model/purchase.dart';
 import 'package:blmercado/product/service/product_service_db.dart';
+import 'package:blmercado/purchase/service/product_purchase_service_db.dart';
 import 'package:blmercado/purchase/service/purchase_service_db.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -15,6 +19,8 @@ class PurchaseController {
       PurchaseServiceDb(dataBaseService: DatabaseSQLiteService.instance);
   final ProductServiceDb productServiceDb =
       ProductServiceDb(dataBaseService: DatabaseSQLiteService.instance);
+  final ProductPurchaseServiceDb productPurchaseServiceDb =
+      ProductPurchaseServiceDb(dataBaseService: DatabaseSQLiteService.instance);
 
   Future<void> savePurchase() async {
     purchase = Purchase(name: purchaseNameController.text);
@@ -36,6 +42,16 @@ class PurchaseController {
     purchase.addProduct(newProduct);
     nameController.clear();
     priceController.clear();
+  }
+
+  Future<void> addProdutPurchased(
+      Product productToAdd, Purchase purchaseToAdd) async {
+    ProductPurchase productPurchase = ProductPurchase(
+        product: productToAdd,
+        purchase: purchaseToAdd,
+        priceUnit: productToAdd.price,
+        quantitie: Random().nextDouble() * 10);
+    productPurchaseServiceDb.insertProductPurchase(productPurchase);
   }
 
   Future<void> updateProduct(Product product) async {
