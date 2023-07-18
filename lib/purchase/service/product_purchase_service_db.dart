@@ -18,10 +18,13 @@ class ProductPurchaseServiceDb {
     return await db!.insert(_TBL_PRODUCTS_PURCHASED, productPurchase.toMap());
   }
 
-  Future<List<ProductPurchase>> getAllProductPurchases() async {
+  Future<List<ProductPurchase>> getAllProductsInPurchase(int purchaseId) async {
     Database? db = await dataBaseService.database;
-    final List<Map<String, dynamic>> maps =
-        await db!.query(_TBL_PRODUCTS_PURCHASED);
+    final List<Map<String, dynamic>> maps = await db!.query(
+      _TBL_PRODUCTS_PURCHASED,
+      where: '${_COLUMN_PURCHASE_ID} = ?',
+      whereArgs: [purchaseId],
+    );
     return List.generate(
         maps.length, (index) => ProductPurchase.fromMap(maps[index]));
   }

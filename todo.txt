@@ -3,12 +3,17 @@
 -Criar nova compra [v]
 (salvar na tabela purchase)
 
--Exibir o nome da nova compra abaixo da appbar[v]
+-Exibir o nome da nova compra abaixo da appbar [v]
 
--Permitir adição de produtos a compra []
+-permitir adição de quantidade do produto comprado []
+
+-Permitir adição de produtos a compra [v]
 (salvar na tabela products_purchased)
 
+-permitir listagem de compras anteriores[]
+
 -Listar os produtos da compra corrente[]
+(atualmente está listando todos os produtos)
 
 -Limpar página da compra exibindo a nova compra []
  (atualamente estão aparecendo os produtos todos)
